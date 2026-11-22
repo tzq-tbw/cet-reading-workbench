@@ -107,6 +107,9 @@ if __name__ == "__main__":
                 assert json.load(response)["count"] == 4
             with urlopen(url, timeout=5) as response:
                 saved = json.load(response)
+                assert [row["title"] for row in saved[:4]] == [
+                    "选词填空", "长篇匹配", "仔细阅读 · 1", "仔细阅读 · 2",
+                ]
                 assert saved[-1]["title"] == "Edited"
                 assert any("____26____" in row["body"] for row in saved)
                 assert all("WRONG CONTENT" not in row["body"] for row in saved)

@@ -94,7 +94,8 @@ async def import_pdf(request: Request):
     except ValueError as error:
         raise HTTPException(422, str(error)) from error
     with closing(connect()) as db, db:
-        db.executemany("INSERT INTO articles (title, body) VALUES (?, ?)", articles)
+        # The library lists newest IDs first, so insert the last passage first.
+        db.executemany("INSERT INTO articles (title, body) VALUES (?, ?)", reversed(articles))
     return {"count": len(articles)}
 
 
