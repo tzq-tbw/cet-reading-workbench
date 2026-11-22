@@ -13,6 +13,9 @@ def before_marker(text, pattern):
 
 def split_exam(text):
     # shortcut: section headings and question numbers must survive text extraction.
+    reading = re.search(r"(?im)^[ \t]*Part[ \t]+(?:III|3)[ \t\r\n]+Reading\s+Comprehension\b", text)
+    if reading:
+        text = text[reading.end():]
     sections = list(re.finditer(r"(?im)^\s*Section[ \t]+([ABC])\b[^\n]*", text))
     for index in range(len(sections) - 2):
         a, b, c = sections[index:index + 3]

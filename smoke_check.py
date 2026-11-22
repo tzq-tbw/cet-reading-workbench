@@ -38,6 +38,8 @@ def example_exam():
     body = ("Students read the article together before they discuss its main ideas. "
             "They return to the text to check supporting details and review words they found difficult.")
     lines = [
+        "Part II Listening Comprehension", "Section A", "Section B", "Section C",
+        "Part III Reading Comprehension",
         "Section A", body + " ____26____", "A. WRONG CONTENT",
         "Section B", "A] " + body, "36. WRONG CONTENT",
         "Section C", "Passage One", body, "46. WRONG CONTENT",
