@@ -1,5 +1,12 @@
 let reviewVersion = 0;
 
+export function wordPosition(sentence, target) {
+  const literal = target.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const wholeWord = new RegExp(`(?<![\\p{L}\\p{N}_])${literal}(?![\\p{L}\\p{N}_])`, "iu");
+  const start = sentence.search(wholeWord);
+  return start >= 0 ? start : sentence.toLowerCase().indexOf(target.toLowerCase());
+}
+
 export async function openReview(kind, request) {
   const version = ++reviewVersion;
   const heading = document.querySelector("#review-title");
@@ -34,7 +41,7 @@ export async function openReview(kind, request) {
     const prompt = document.createElement("p");
     prompt.lang = "en";
     const sentence = card.original_sentence;
-    const start = sentence.toLowerCase().indexOf(card.target.toLowerCase());
+    const start = kind === "word" ? wordPosition(sentence, card.target) : -1;
     if (kind === "word" && start >= 0) {
       const marker = document.createElement("mark");
       const end = start + card.target.length;
